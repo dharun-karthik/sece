@@ -1,33 +1,37 @@
 package com.example.demo;
 
+import com.example.demo.database.Database;
+import com.example.demo.entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.util.Objects;
+
 
 public class LoginController {
 
   @FXML
-  private TextField usernameField;
+  private TextField email;
 
   @FXML
   private PasswordField passwordField;
 
   @FXML
   private void loginClicked(ActionEvent event) {
-    String username = usernameField.getText();
+    String email = this.email.getText();
     String password = passwordField.getText();
-//    HttpClient.newBuilder(new URI("https://postman-echo.com/get"))
-    System.out.println("Username: " + username);
+    System.out.println("Username: " + email);
     System.out.println("Password: " + password);
 
-     if (isValidLogin(username, password)) {
-        LoginApplication.reroute(event, "hello-view.fxml", "Hello view");
+
+     if (isValidLogin(email, password)) {
+        LoginApplication.reroute(event, "users-view.fxml", "Hello view");
      }
   }
 
-  private boolean isValidLogin(String username, String password) {
-    return username.equals("example") && password.equals("password");
+  private boolean isValidLogin(String email, String password) {
+    return Objects.equals(Database.getUserByEmail(email), new User(email, password));
   }
 }

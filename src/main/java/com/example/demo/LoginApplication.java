@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.demo.database.Database.createTablesIfNotExists;
+
 public class LoginApplication extends Application {
   public static void reroute(final ActionEvent event, final String path, final String title) {
     FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource(path));
@@ -20,7 +22,6 @@ public class LoginApplication extends Application {
     } catch (IOException e) {
       System.out.println(e);
     }
-
   }
 
   public static void main(String[] args) {
@@ -29,6 +30,7 @@ public class LoginApplication extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
+    createTablesIfNotExists();
     FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("Login.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 640, 320);
     stage.setTitle("Hell");
